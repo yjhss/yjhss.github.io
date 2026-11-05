@@ -149,3 +149,5 @@ coverage/
 # themes/blowfish (Git Submodule)
 # go.mod / go.sum (if Hugo Modules are used)
 # README.md
+
+ref.txt
