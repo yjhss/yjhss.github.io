@@ -1,0 +1,32 @@
+theme = "blowfish"
+baseURL = "https://yjhss.github.io/"
+defaultContentLanguage = "en"
+enableRobotsTXT = true
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+  series = "series"
+
+[related]
+  includeNewer = true
+  threshold = 10
+  toLower = true
+
+  [[related.indices]]
+    name = "categories"
+    weight = 100
+
+  [[related.indices]]
+    name = "tags"
+    weight = 80
+
+  [[related.indices]]
+    name = "date"
+    weight = 10
+
+  [markup.goldmark.renderer]
+  unsafe = true

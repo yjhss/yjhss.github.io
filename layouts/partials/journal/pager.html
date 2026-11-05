@@ -1,0 +1,10 @@
+{{ $pager := . }}
+{{ if gt $pager.TotalPages 1 }}
+<nav class="journal-pagination" aria-label="페이지 탐색">
+  {{ if $pager.HasPrev }}<a href="{{ $pager.Prev.URL }}" rel="prev">← 이전</a>{{ end }}
+  {{ range $pager.Pagers }}
+    <a href="{{ .URL }}" {{ if eq .PageNumber $pager.PageNumber }}class="is-current" aria-current="page"{{ end }}>{{ .PageNumber }}</a>
+  {{ end }}
+  {{ if $pager.HasNext }}<a href="{{ $pager.Next.URL }}" rel="next">다음 →</a>{{ end }}
+</nav>
+{{ end }}

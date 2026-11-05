@@ -1,0 +1,13 @@
+{{ define "main" }}
+{{ $posts := .RegularPages.ByDate.Reverse }}
+{{ $pager := .Paginate $posts 5 }}
+<div class="journal-home journal-list-page">
+  <div class="journal-layout">
+    <section class="journal-feed">
+      <div class="journal-heading"><div><h1>All Posts</h1><p>전체 게시글 · {{ len $posts }}개</p></div></div>
+      {{ partial "journal/cards.html" (dict "pages" $pager.Pages) }}
+      {{ partial "journal/pager.html" $pager }}
+    </section>
+  </div>
+</div>
+{{ end }}

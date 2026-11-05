@@ -1,0 +1,130 @@
+
+{{ define "main" }}
+<section class="journal-tag-page journal-categories-page">
+
+  <div class="journal-heading">
+    <div>
+      <h1>Categories</h1>
+      <p class="journal-tag-lead">카테고리</p>
+    </div>
+  </div>
+
+
+<div class="journal-category-overview journal-category-tree">
+
+  {{ range site.Data.categories }}
+  {{ $group := . }}
+  {{ $total := 0 }}
+
+  {{ range $group.children }}
+    {{ $term := site.GetPage (printf "/categories/%s" (. | urlize)) }}
+    {{ with $term }}
+      {{ $posts := where .RegularPages "Section" "posts" }}
+      {{ $total = add $total (len $posts) }}
+    {{ end }}
+  {{ end }}
+
+  <details class="journal-category-group">
+      <summary class="journal-category-group-title">
+       <span class="journal-category-group-name">
+          <span aria-hidden="true">▸</span>
+          <a
+            class="journal-category-group-link"
+            href="{{ printf "category-groups/%s/" ($group.name | urlize) | relURL }}"
+            onclick="event.stopPropagation()"
+          >
+            {{ $group.name }}
+          </a>
+        </span>
+
+        <span class="journal-category-group-count">
+          {{ $total }} posts
+        </span>
+        <span class="journal-category-group-chevron" aria-hidden="true">⌄</span>
+      </summary>
+
+      <div class="journal-category-group-children">
+        {{ range .children }}
+          {{ $name := . }}
+          {{ $term := site.GetPage (printf "/categories/%s" ($name | urlize)) }}
+
+          {{ with $term }}
+            <a class="journal-category-child" href="{{ .RelPermalink }}">
+              <span>{{ $name }}</span>
+              <span class="journal-count">
+                {{ len .RegularPages }} posts
+              </span>
+            </a>
+          {{ else }}
+            <span class="journal-category-child is-empty">
+              <span>{{ $name }}</span>
+              <span class="journal-count">No posts</span>
+            </span>
+          {{ end }}
+        {{ end }}
+      </div>
+    </details>
+  {{ end }}
+
+</div>
+
+
+
+</section>
+
+
+<script>
+document.querySelectorAll(
+  ".journal-categories-page .journal-category-group"
+).forEach((folder) => {
+  const children = folder.querySelector(
+    ".journal-category-group-children"
+  );
+
+  if (!children) return;
+
+  let animations = [];
+
+  folder.addEventListener("toggle", () => {
+    // 이전 애니메이션 취소
+    animations.forEach(animation => animation.cancel());
+    animations = [];
+
+    if (!folder.open) return;
+
+    if (window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches) return;
+
+    // 열 때마다 새로운 애니메이션 생성
+    const items = children.querySelectorAll(
+      ".journal-category-child"
+    );
+
+    items.forEach((item, index) => {
+      const animation = item.animate(
+        [
+          {
+            opacity: 0,
+            transform: "translateY(-10px)"
+          },
+          {
+            opacity: 1,
+            transform: "translateY(0)"
+          }
+        ],
+        {
+          duration: 320,
+          delay: index * 60,
+          easing: "cubic-bezier(.22, 1, .36, 1)",
+          fill: "backwards"
+        }
+      );
+
+      animations.push(animation);
+    });
+  });
+});
+</script>
+
+{{ end }}

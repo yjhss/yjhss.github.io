@@ -1,0 +1,151 @@
+
+# ============================================
+# Hugo Blog - .gitignore
+# Hugo + Blowfish + GitHub Pages
+# ============================================
+
+
+# --------------------------------------------
+# 1. Hugo Build Output
+# --------------------------------------------
+
+/public/
+/resources/_gen/
+/hugo_stats.json
+/.hugo_build.lock
+
+
+# --------------------------------------------
+# 2. Hugo Temporary & Cache Files
+# --------------------------------------------
+
+.hugo_build.lock
+.hugo_cache/
+.hugo_cache_*/
+.hugo_build/
+
+
+# --------------------------------------------
+# 3. macOS
+# --------------------------------------------
+
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+
+
+# --------------------------------------------
+# 4. Windows
+# --------------------------------------------
+
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+
+
+# --------------------------------------------
+# 5. VS Code & IDE
+# --------------------------------------------
+
+.vscode/*
+!.vscode/extensions.json
+
+.idea/
+*.swp
+*.swo
+*~
+*.orig
+
+
+# --------------------------------------------
+# 6. Logs
+# --------------------------------------------
+
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+# --------------------------------------------
+# 7. Node.js (Optional)
+# --------------------------------------------
+
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+
+
+# --------------------------------------------
+# 8. Environment Variables & Secrets
+# --------------------------------------------
+
+.env
+.env.*
+!.env.example
+
+*.pem
+*.key
+*.p12
+*.pfx
+
+secrets/
+credentials/
+
+
+# --------------------------------------------
+# 9. Temporary & Backup Files
+# --------------------------------------------
+
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+
+/hugo.toml.backup
+
+*.zip
+
+
+# --------------------------------------------
+# 10. Python Cache (Optional)
+# --------------------------------------------
+
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+
+# --------------------------------------------
+# 11. Local Test & Coverage
+# --------------------------------------------
+
+coverage/
+.cache/
+.tmp/
+
+
+# ============================================
+# IMPORTANT: Keep these tracked
+# ============================================
+
+# .github/workflows/
+# .gitmodules
+# config/
+# content/
+# assets/
+# layouts/
+# static/
+# themes/blowfish (Git Submodule)
+# go.mod / go.sum (if Hugo Modules are used)
+# README.md

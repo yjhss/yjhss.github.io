@@ -1,0 +1,4 @@
+{{ partial "journal/sidebar.html" (dict
+  "active" .RelPermalink
+  "isPosts" (and .IsSection (eq .Section "posts"))
+) }}

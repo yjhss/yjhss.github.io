@@ -1,0 +1,17 @@
+{{ if eq .Section "posts" }}
+  {{ $prev := .PrevInSection }}{{ $next := .NextInSection }}
+  {{ if .Site.Params.article.invertPagination }}{{ $prev = .NextInSection }}{{ $next = .PrevInSection }}{{ end }}
+  {{ if and (.Site.Params.article.showPagination) (or $prev $next) }}
+    <nav class="journal-article-nav" aria-label="이전 글과 다음 글">
+      {{ with $prev }}<a class="journal-article-nav-card" href="{{ .RelPermalink }}"><span>← 이전 글</span><strong>{{ .Title }}</strong></a>{{ end }}
+      {{ with $next }}<a class="journal-article-nav-card journal-article-nav-next" href="{{ .RelPermalink }}"><span>다음 글 →</span><strong>{{ .Title }}</strong></a>{{ end }}
+    </nav>
+  {{ end }}
+  {{ $candidates := where (.Site.RegularPages.Related .) "Section" "posts" }}
+  {{ with first 2 $candidates }}
+    <aside id="journal-related-popup" class="journal-related-popup" aria-label="관련 글 추천" hidden>
+      <div class="journal-popup-header"><strong>이 글과 함께 읽으면 좋아요</strong><button type="button" class="journal-popup-close" aria-label="추천 닫기">×</button></div>
+      {{ range . }}<a href="{{ .RelPermalink }}" class="journal-popup-item"><span>{{ .Title }}</span><span aria-hidden="true">↗</span></a>{{ end }}
+    </aside>
+  {{ end }}
+{{ end }}

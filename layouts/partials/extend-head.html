@@ -1,0 +1,36 @@
+{{/* Journal CSS: load component files in original cascade order. */}}
+{{ $styles := slice }}
+{{ with resources.Get "css/journal/01-foundation-and-editorial.css" }}
+  {{ $styles = $styles | append . }}
+{{ end }}
+{{ with resources.Get "css/journal/02-interactions-reading.css" }}
+  {{ $styles = $styles | append . }}
+{{ end }}
+{{ with resources.Get "css/journal/03-home-feed-overrides.css" }}
+  {{ $styles = $styles | append . }}
+{{ end }}
+{{ with resources.Get "css/journal/04-article-header-toc.css" }}
+  {{ $styles = $styles | append . }}
+{{ end }}
+{{ with resources.Get "css/journal/05-shared-pages-tags.css" }}
+  {{ $styles = $styles | append . }}
+{{ end }}
+{{ with resources.Get "css/journal/06-search-trigger-and-code.css" }}
+  {{ $styles = $styles | append . }}
+{{ end }}
+{{ with resources.Get "css/journal/07-home-terminal.css" }}
+  {{ $styles = $styles | append . }}
+{{ end }}
+{{ with resources.Get "css/journal/08-categories-finder.css" }}
+  {{ $styles = $styles | append . }}
+{{ end }}
+{{ with resources.Get "css/journal/09-search-dialog.css" }}
+  {{ $styles = $styles | append . }}
+{{ end }}
+{{ with resources.Get "css/journal/10-about.css" }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}">
+{{ end }}
+{{ if gt (len $styles) 0 }}
+  {{ $bundle := $styles | resources.Concat "css/journal-bundle.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $bundle.RelPermalink }}" integrity="{{ $bundle.Data.Integrity }}">
+{{ end }}

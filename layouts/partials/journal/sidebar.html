@@ -1,0 +1,231 @@
+
+{{ $all := where site.RegularPages "Section" "posts" }}
+{{ $active := .active | default "" }}
+{{ $isPosts := .isPosts | default false }}
+
+<!-- Drawer 열기 버튼 -->
+<button
+  type="button"
+  class="journal-drawer-trigger"
+  aria-label="카테고리 메뉴 열기"
+  aria-controls="journal-category-drawer"
+  aria-expanded="false"
+>
+  <span>Categories</span>
+  <span aria-hidden="true">☰</span>
+</button>
+
+<!-- 배경 오버레이 -->
+<div class="journal-drawer-backdrop" aria-hidden="true"></div>
+
+<!-- 카테고리 Drawer -->
+<aside
+  id="journal-category-drawer"
+  class="journal-category-drawer"
+  aria-label="카테고리"
+  aria-hidden="true"
+  inert
+>
+  <div class="journal-drawer-header">
+    <h2>Categories</h2>
+    <button
+      type="button"
+      class="journal-drawer-close"
+      aria-label="카테고리 메뉴 닫기"
+    >✕</button>
+  </div>
+
+  <nav class="journal-drawer-list" aria-label="카테고리 목록">
+
+   <a
+      class="journal-drawer-all{{ if $isPosts }} is-current{{ end }}"
+      href="{{ "posts/" | relURL }}"
+      {{ if $isPosts }}aria-current="page"{{ end }}
+    >
+      <span>All posts</span>
+      <span class="journal-count">{{ len $all }}</span>
+    </a>
+
+    {{ range $index, $group := site.Data.categories }}
+      {{ $total := 0 }}
+      {{ $groupActive := false }}
+      {{ $groupURL := printf "category-groups/%s/" ($group.name | urlize) | relURL }}
+      {{ $groupID := printf "journal-drawer-group-%d" $index }}
+
+      {{ range $group.children }}
+        {{ $name := . }}
+        {{ $term := site.GetPage (printf "/categories/%s" ($name | urlize)) }}
+
+        {{ with $term }}
+          {{ $posts := where .RegularPages "Section" "posts" }}
+          {{ $total = add $total (len $posts) }}
+
+          {{ if eq $active .RelPermalink }}
+            {{ $groupActive = true }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+
+      {{ if eq $active $groupURL }}
+        {{ $groupActive = true }}
+      {{ end }}
+
+      <div class="journal-drawer-group">
+
+       
+<div class="journal-drawer-parent">
+
+          <!-- 상위 카테고리 이동 영역 -->
+          <a
+            href="{{ $groupURL }}"
+            class="journal-drawer-parent-link{{ if eq $active $groupURL }} is-current{{ end }}"
+            {{ if eq $active $groupURL }}aria-current="page"{{ end }}
+          >
+            <span class="journal-drawer-parent-name">
+              {{ $group.name }}
+            </span>
+
+            <span class="journal-count">
+              {{ $total }}
+            </span>
+          </a>
+
+          <!-- 하위 카테고리 펼치기/접기 전용 버튼 -->
+          <button
+            type="button"
+            class="journal-drawer-group-toggle"
+            aria-label="{{ $group.name }} 하위 카테고리 펼치기 또는 접기"
+            aria-controls="{{ $groupID }}"
+            aria-expanded="{{ if $groupActive }}true{{ else }}false{{ end }}"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="19"
+              height="19"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+
+        </div>
+
+
+        <div
+          id="{{ $groupID }}"
+          class="journal-drawer-children"
+          {{ if not $groupActive }}hidden{{ end }}
+        >
+
+          {{ range $group.children }}
+            {{ $name := . }}
+            {{ $term := site.GetPage (printf "/categories/%s" ($name | urlize)) }}
+
+            {{ with $term }}
+              {{ $posts := where .RegularPages "Section" "posts" }}
+
+              <a
+                href="{{ .RelPermalink }}"
+                class="journal-drawer-child{{ if eq $active .RelPermalink }} is-current{{ end }}"
+                {{ if eq $active .RelPermalink }}aria-current="page"{{ end }}
+              >
+                <span>{{ $name }}</span>
+                <span class="journal-count">{{ len $posts }}</span>
+              </a>
+
+            {{ else }}
+              <span class="journal-drawer-child is-empty">
+                <span>{{ $name }}</span>
+                <span class="journal-count">0</span>
+              </span>
+            {{ end }}
+
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+
+  </nav>
+</aside>
+
+<script>
+(function () {
+  const trigger = document.querySelector(".journal-drawer-trigger");
+  const drawer = document.getElementById("journal-category-drawer");
+  const backdrop = document.querySelector(".journal-drawer-backdrop");
+  const closeButton = drawer?.querySelector(".journal-drawer-close");
+
+  if (!trigger || !drawer || !backdrop || !closeButton) return;
+
+  let lastFocus = null;
+
+  function setDrawer(open) {
+    if (open) {
+      lastFocus = document.activeElement;
+    }
+
+    document.body.classList.toggle("journal-drawer-open", open);
+    trigger.setAttribute("aria-expanded", String(open));
+    drawer.setAttribute("aria-hidden", String(!open));
+    drawer.inert = !open;
+
+    if (open) {
+      closeButton.focus();
+    } else if (lastFocus) {
+      lastFocus.focus();
+    }
+  }
+
+  trigger.addEventListener("click", () => setDrawer(true));
+  closeButton.addEventListener("click", () => setDrawer(false));
+  backdrop.addEventListener("click", () => setDrawer(false));
+
+  document.addEventListener("keydown", (event) => {
+    if (!document.body.classList.contains("journal-drawer-open")) return;
+
+    if (event.key === "Escape") {
+      setDrawer(false);
+    }
+
+    if (event.key === "Tab") {
+      const focusable = Array.from(
+        drawer.querySelectorAll(
+          'a[href], button:not([disabled])'
+        )
+      ).filter(el => el.getClientRects().length > 0);
+
+      if (!focusable.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+  });
+
+  drawer.querySelectorAll(".journal-drawer-group-toggle").forEach(button => {
+    button.addEventListener("click", () => {
+      const target = document.getElementById(
+        button.getAttribute("aria-controls")
+      );
+      if (!target) return;
+
+      const expanded = button.getAttribute("aria-expanded") === "true";
+
+      button.setAttribute("aria-expanded", String(!expanded));
+      target.hidden = expanded;
+    });
+  });
+})();
+</script>

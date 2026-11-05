@@ -1,0 +1,25 @@
+{{ define "main" }}
+<section class="journal-tag-page">
+<div class="journal-heading">
+  <div>
+    <h1>Tags</h1>
+    <p class="journal-tag-lead">태그</p>
+  </div>
+</div>
+  <div class="journal-tag-cloud">
+    {{ range .Data.Terms.ByCount }}
+      <a class="journal-tag-bubble" href="{{ .Page.RelPermalink }}">
+        {{ printf "#%s" .Page.Title }} <span><p>
+  {{ if eq .Count 0 }}
+    No posts
+  {{ else if eq .Count 1 }}
+    1 post
+  {{ else }}
+    {{ .Count }} posts
+  {{ end }}
+</p></span>
+      </a>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

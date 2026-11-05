@@ -1,0 +1,57 @@
+colorScheme = "slate"
+
+defaultAppearance = "dark"
+autoSwitchAppearance = true
+
+enableSearch = true
+enableCodeCopy = true
+
+mainSections = ["posts"]
+
+[header]
+  layout = "basic"
+  showTitle = true
+
+[homepage]
+  #layout = "page"
+  showRecentItems = 9
+  showMoreLink = true
+  showMoreLinkDest = "/posts/"
+  cardView = true
+  cardViewScreenWidth = false
+  layout = "custom"
+  showRecent = false
+
+[list]
+  showSummary = true
+  showCards = true
+  cardView = true
+  cardViewScreenWidth = false
+  groupByYear = false
+
+[article]
+  showAuthor = false
+  showAuthorBottom = false
+  showWordCount = false
+
+  showDate = true
+  showDateUpdated = true
+  showReadingTime = false
+  showReadingProgress = true
+
+  showTableOfContents = true
+  showBreadcrumbs = true
+
+  showTaxonomies = true
+  showCategories = true
+  showTags = true
+  showCategoriesInSecondaryColor = true
+
+  showPagination = true
+  invertPagination = false
+  showRelatedContent = false
+  relatedContentLimit = 3
+
+[footer]
+  showScrollToTop = true
+  showAppearanceSwitcher = true

@@ -1,0 +1,25 @@
+{{ $pages := .pages }}
+<div class="journal-posts">
+  {{ range $pages }}
+    {{ $post := . }}
+    {{ $cover := .Resources.GetMatch "feature*" }}
+    <a class="journal-post-card" href="{{ .RelPermalink }}">
+      <div class="journal-post-cover">
+        {{ with $cover }}<img src="{{ .RelPermalink }}" alt="{{ $post.Title }} 대표 이미지" loading="lazy">{{ else }}
+          <div class="journal-cover-placeholder"><span>{{ $post.Title }}</span></div>
+        {{ end }}
+      </div>
+      <div class="journal-post-body">
+        <div class="journal-post-meta">
+          {{ with .Params.categories }}<span class="journal-post-category">{{ index . 0 }}</span>{{ end }}
+          {{ if gt .Date.Year 1900 }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>{{ end }}
+        </div>
+        <h2>{{ .Title }}</h2>
+        <p class="journal-post-summary">{{ with .Params.summary }}{{ . | plainify | truncate 100 }}{{ else }}{{ $post.Summary | plainify | truncate 100 }}{{ end }}</p>
+        <div class="journal-post-tags">{{ with .Params.tags }}{{ range first 3 . }}<span>#{{ . }}</span>{{ end }}{{ end }}</div>
+      </div>
+    </a>
+  {{ else }}
+    <p class="journal-empty">아직 작성한 글이 없습니다.</p>
+  {{ end }}
+</div>

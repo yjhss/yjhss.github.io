@@ -1,0 +1,27 @@
+{{ define "main" }}
+{{ $posts := .RegularPages.ByDate.Reverse }}
+{{ $pager := .Paginate $posts 6 }}
+<div class="journal-home journal-list-page">
+  <div class="journal-layout">
+    <section class="journal-feed">
+      <div class="journal-heading">
+        <div>
+          <h1>{{ printf "#%s" .Title }}</h1>
+          <p>{{ len $posts }}개</p>
+        </div>
+        <div class="journal-heading-actions">
+          <a class="journal-view-all" href="{{ "posts/" | relURL }}">
+            전체 글 보기 ↗
+          </a>
+          <a class="journal-view-all" href="{{ "tags/" | relURL }}">
+            전체 태그 보기 ↗
+          </a>
+        </div>
+      </div>
+      {{ partial "journal/cards.html" (dict "pages" $pager.Pages) }}
+      {{ partial "journal/pager.html" $pager }}
+    </section>
+    {{ partial "journal/sidebar.html" (dict "active" "") }}
+  </div>
+</div>
+{{ end }}

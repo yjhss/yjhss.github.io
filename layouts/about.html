@@ -1,0 +1,125 @@
+
+{{ define "main" }}
+<section class="journal-tag-page journal-about-page">
+
+  <div class="journal-heading">
+    <div>
+      <h1>About</h1>
+      <p class="journal-tag-lead">소개</p>
+    </div>
+  </div>
+
+  <div class="journal-about-content">
+
+   
+
+<div class="about-person-illustration">
+  <svg class="about-person-svg"
+       viewBox="0 0 64 40"
+       role="img"
+       aria-label="후드티를 입고 컴퓨터 앞에서 타이핑하는 픽셀 캐릭터">
+
+    <!-- 책상 -->
+    <path fill="#8e919b" d="M5 30h54v3H5z"/>
+
+    <!-- 모니터 -->
+    <path fill="#34333d" d="M7 7h20v19H7z"/>
+    <path fill="#202733" d="M9 9h16v15H9z"/>
+    <path fill="#8e919b" d="M15 26h4v4h-4zM12 29h10v1H12z"/>
+
+    <!-- 화면 속 코드 -->
+    <g class="pixel-screen-code" fill="#8fe0af">
+      <path d="M11 12h9v1h-9z"/>
+      <path d="M11 15h12v1H11z"/>
+      <path d="M11 18h6v1h-6z"/>
+    </g>
+    <path class="pixel-screen-cursor"
+          fill="#8fe0af" d="M18 18h2v2h-2z"/>
+
+    <!-- 키보드 -->
+    <path fill="#34333d" d="M23 28h16v2H23z"/>
+    <path fill="#aeb7c0" d="M24 28h14v1H24z"/>
+
+    <!-- 몸통: 후드티 -->
+    <path fill="#273b50"
+          d="M40 16h7v2h3v3h2v9H37V21h2v-3h1z"/>
+    <path fill="#435d78"
+          d="M41 17h6v2h2v10H39v-8h1v-3h1z"/>
+
+    <!-- 후드 뒷부분 -->
+    <path fill="#1d2c3d"
+          d="M42 10h6v2h2v7h-3v-5h-5z"/>
+
+    <!-- 목 -->
+    <path fill="#e8b999" d="M39 15h3v3h-3z"/>
+
+    <!-- 머리 -->
+    <g class="pixel-person-head">
+      <!-- 머리카락 -->
+      <path fill="#2a2321"
+            d="M34 7h9v2h2v5h-2v-4h-9z"/>
+
+      <!-- 얼굴 -->
+      <path fill="#f1c7a7"
+            d="M34 10h9v6h-9z"/>
+
+      <!-- 코 -->
+      <path fill="#e5aa8d"
+            d="M32 13h2v2h-2z"/>
+
+      <!-- 눈 -->
+      <path class="pixel-person-eye"
+            fill="#242832"
+            d="M35 12h2v1h-2z"/>
+    </g>
+
+    <!-- 픽셀 안경: 측면 프레임과 렌즈 -->
+    <g class="pixel-person-glasses" aria-hidden="true">
+    <!-- 렌즈 -->
+    <path fill="#303844"
+            d="M34 11h6v1h-6z
+            M34 12h1v4h-1z
+            M39 12h1v4h-1z
+            M34 16h6v1h-6z"/>
+
+    <!-- 안경 다리 -->
+    <path fill="#303844"
+            d="M40 12h4v1h-4z"/>
+    </g>
+
+    <!-- 어깨에서 뻗은 팔 -->
+    <g class="pixel-person-arm">
+      <!-- 후드 소매 -->
+      <path fill="#344c66"
+            d="M39 19h3v3h-2v2h-4v-2h3z"/>
+      <path fill="#435d78"
+            d="M35 23h5v3h-5z"/>
+
+      <!-- 손 -->
+      <path fill="#f1c7a7"
+            d="M29 26h7v2h-7z"/>
+    </g>
+
+    <!-- 바지 및 앉은 다리 -->
+    <path fill="#343943"
+          d="M39 29h14v3H39z"/>
+    <path fill="#343943"
+          d="M46 32h5v5h-5z"/>
+
+    <!-- 후드 끈 -->
+    <path fill="#d4dce4"
+          d="M40 18h1v4h-1zM43 18h1v3h-1z"/>
+
+  </svg>
+</div>
+
+
+    <!-- About Markdown Content -->
+    <div class="article-content prose dark:prose-invert">
+      {{ .Content }}
+    </div>
+
+  </div>
+
+</section>
+{{ end }}

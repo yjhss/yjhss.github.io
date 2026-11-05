@@ -1,0 +1,739 @@
+/* ==========================================
+   CATEGORIES — FINDER FOLDERS
+========================================== */
+/* 폴더 그리드 */
+.journal-categories-page .journal-category-overview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.8rem 1rem;
+  max-width: 780px;
+  margin: 2.5rem auto 3rem;
+  align-items: stretch;
+}
+/* 폴더 본체 */
+.journal-categories-page .journal-category-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  min-height: 125px;
+  padding: 1rem;
+  margin-top: 10px;
+  background: #f5f5f5;
+  color: #24272c !important;
+  border: 0.5px solid #c5cad1;
+  border-radius: 0 11px 11px 11px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.07);
+  text-decoration: none !important;
+  transform: translateY(0);
+  transition:
+    transform .3s cubic-bezier(.22,1,.36,1),
+    box-shadow .3s ease,
+    background-color .3s ease;
+}
+/* 폴더 상단 탭 */
+.journal-categories-page .journal-category-card::before {
+  content: "";
+  position: absolute;
+  width: 40%;
+  height: 10px;
+  bottom: 100%;
+  left: -1px;
+  background: #d4d8de;
+  border-bottom: 0;
+  border-radius: 9px 9px 0 0;
+}
+/* 기존 아이콘 영역 */
+.journal-categories-page .journal-category-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.journal-categories-page .journal-category-card-icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 11px;
+  background: rgba(255,255,255,.32);
+  color: #505967;
+  font-size: 1rem;
+}
+.journal-categories-page .journal-category-card-arrow {
+  color: #737b87;
+  font-size: 1.3rem;
+  transition: transform .3s ease;
+}
+/* 폴더 제목 및 게시글 수 */
+.journal-categories-page .journal-category-card-content h2 {
+  margin: 0 0 .4rem;
+  color: #24272c !important;
+  font-size: 1rem;
+  font-weight: 750;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.journal-categories-page .journal-category-card-content p {
+  margin: 0;
+  color: #69717d !important;
+  font-size: .75rem;
+}
+/* 마우스 호버 */
+@media (hover: hover) and (pointer: fine) {
+  .journal-categories-page .journal-category-card:hover {
+    transform: translateY(-7px);
+    background: #e1e4e9;
+    box-shadow: 0 16px 28px rgba(0,0,0,.12);
+  }
+  .journal-categories-page .journal-category-card:hover
+  .journal-category-card-arrow {
+    transform: translate(3px, -3px);
+  }
+}
+/* 다크 모드 */
+html.dark .journal-categories-page .journal-category-card {
+  background: #34383f;
+  color: #f5f5f5 !important;
+  border-color: #454a52;
+}
+html.dark .journal-categories-page .journal-category-card::before {
+  background: #292d33;
+  border-color: #454a52;
+}
+html.dark .journal-categories-page .journal-category-card-content h2 {
+  color: #f5f5f5 !important;
+}
+html.dark .journal-categories-page .journal-category-card-content p {
+  color: #b6bbc4 !important;
+}
+html.dark .journal-categories-page .journal-category-card-icon {
+  color: #ddd;
+  background: rgba(255,255,255,.08);
+}
+html.dark .journal-categories-page .journal-category-card-arrow {
+  color: #c3c7ce;
+}
+@media (hover: hover) and (pointer: fine) {
+  html.dark .journal-categories-page .journal-category-card:hover {
+    background: #40454d;
+  }
+}
+/* 모바일 1열 */
+@media (max-width: 640px) {
+  .journal-categories-page .journal-category-overview {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin: 2rem auto 3rem;
+  }
+  .journal-categories-page .journal-category-card {
+    min-height: 155px;
+  }
+}
+/* 모션 최소화 */
+@media (prefers-reduced-motion: reduce) {
+  .journal-categories-page .journal-category-card,
+  .journal-categories-page .journal-category-card-arrow {
+    transition: none;
+  }
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   CATEGORIES — EXPANDABLE FOLDERS
+========================================== */
+
+/* 폴더 3열 */
+.journal-categories-page .journal-category-tree {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 2rem 1.2rem;
+  max-width: 850px;
+  margin: 3rem auto 4rem;
+}
+
+/* 폴더 전체 */
+.journal-categories-page .journal-category-group {
+  position: relative;
+  min-width: 0;
+  margin-top: 12px;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+/* 폴더 본체 */
+.journal-categories-page .journal-category-group-title {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 135px;
+  padding: 1.15rem;
+  border: 0;
+  border-radius: 0 13px 13px 13px;
+  background: #f5f5f5;
+  color: #242424;
+  cursor: pointer;
+  list-style: none;
+  box-shadow: 0 7px 20px rgba(0,0,0,.045);
+  transition:
+    transform .25s ease,
+    background-color .25s ease,
+    box-shadow .25s ease;
+}
+
+.journal-category-group-title::-webkit-details-marker {
+  display: none;
+}
+
+/* 폴더 상단 탭 */
+.journal-categories-page .journal-category-group-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 100%;
+  width: 40%;
+  height: 12px;
+  background: #e8e8e8;
+  border-radius: 8px 8px 0 0;
+}
+
+/* 폴더 이름 */
+.journal-category-group-name {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: 1rem;
+  font-weight: 750;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+/* 기존 ▸ 문자를 폴더 아이콘으로 교체 */
+.journal-category-group-name > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  border-radius: 7px;
+  background: rgba(0,0,0,.055);
+  color: #666;
+  font-size: 0;
+}
+
+.journal-category-group-name > span::after {
+  content: "▸";
+  font-size: .85rem;
+}
+
+/* 열림 표시 */
+.journal-category-group-chevron {
+  align-self: flex-end;
+  color: #888;
+  font-size: 1.1rem;
+  transition: transform .25s ease;
+}
+
+/* 폴더 열림 상태 */
+.journal-category-group[open]
+.journal-category-group-title {
+  background: #ebebeb;
+  box-shadow: 0 5px 15px rgba(0,0,0,.04);
+}
+
+.journal-category-group[open]
+.journal-category-group-title::before {
+  background: #dedede;
+}
+
+.journal-category-group[open]
+.journal-category-group-chevron {
+  transform: rotate(180deg);
+}
+
+.journal-category-group[open]
+.journal-category-group-name > span::after {
+  content: "⌄";
+}
+
+/* ==========================================
+   폴더에서 하위 카테고리 등장
+========================================== */
+
+/* 하위 카테고리 영역: 움직이지 않고 제자리 유지 */
+.journal-category-group-children {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0 8px;
+  padding: 8px 0 0;
+  background: transparent;
+}
+
+/* 하위 카테고리: 기존 종이 카드 디자인 유지 */
+.journal-categories-page .journal-category-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  min-width: 0;
+  padding: .75rem .8rem;
+  border: 1px solid var(--j-line);
+  border-radius: 8px;
+  background: var(--j-card);
+  color: var(--j-text) !important;
+  text-decoration: none !important;
+  font-size: .82rem;
+  transition:
+    transform .2s ease,
+    background-color .2s ease,
+    box-shadow .2s ease;
+}
+
+.journal-category-child > span:first-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.journal-category-child .journal-count {
+  flex-shrink: 0;
+  font-size: .7rem;
+}
+
+/* 폴더 등장 효과는 taxonomy.html에서 Web Animations API로 실행합니다.
+   CSS [open] 애니메이션을 함께 적용하면 반복 실행이 충돌할 수 있습니다. */
+
+/* 게시글이 없는 항목 */
+.journal-category-child.is-empty {
+  opacity: .55;
+  cursor: default;
+}
+
+/* 폴더와 항목 호버 */
+@media (hover: hover) and (pointer: fine) {
+  .journal-category-group-title:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0,0,0,.08);
+  }
+
+  .journal-category-child:not(.is-empty):hover {
+    transform: translateX(4px);
+    background: var(--j-soft);
+    box-shadow: 0 4px 12px rgba(0,0,0,.05);
+  }
+}
+
+/* ==========================================
+   DARK MODE
+========================================== */
+
+html.dark .journal-category-group-title {
+  background: #303030;
+  color: #f4f4f4;
+}
+
+html.dark .journal-category-group-title::before {
+  background: #282828;
+}
+
+html.dark .journal-category-group[open]
+.journal-category-group-title {
+  background: #393939;
+}
+
+html.dark .journal-category-group[open]
+.journal-category-group-title::before {
+  background: #303030;
+}
+
+html.dark .journal-category-group-name > span {
+  background: rgba(255,255,255,.08);
+  color: #ccc;
+}
+
+html.dark .journal-category-group-chevron {
+  color: #aaa;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 800px) {
+  .journal-categories-page .journal-category-tree {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+
+@media (max-width: 540px) {
+  .journal-categories-page .journal-category-tree {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+    margin: 2rem auto 3rem;
+  }
+
+  .journal-categories-page .journal-category-group-title {
+    min-height: 110px;
+  }
+}
+
+/* 접근성 */
+.journal-category-group-title:focus-visible,
+.journal-category-child:focus-visible {
+  outline: 2px solid var(--j-text);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journal-category-group-title,
+  .journal-category-group-chevron,
+  .journal-category-child,
+  .journal-category-group-children {
+    animation: none;
+    transition: none;
+  }
+
+  .journal-category-group[open] .journal-category-child {
+    animation: none;
+  }
+}
+
+
+
+
+/* ==========================================
+   CATEGORY — SLIDE DRAWER
+========================================== */
+
+
+/* 열기 버튼: 화면 오른쪽 가장자리 */
+.journal-drawer-trigger {
+  position: fixed;
+  top: 42%;
+  right: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  padding: .9rem .75rem;
+  border-radius: 12px 0 0 12px;
+  background: var(--j-text);
+  color: var(--j-card);
+  font-size: .78rem;
+  font-weight: 650;
+  cursor: pointer;
+  writing-mode: vertical-rl;
+  box-shadow: -4px 4px 18px rgba(0,0,0,.12);
+  transition: transform .25s ease;
+}
+
+.journal-drawer-trigger:hover {
+  transform: translateX(-3px);
+}
+
+/* 배경 오버레이 */
+.journal-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  background: rgba(0,0,0,.35);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .3s ease, visibility .3s;
+}
+
+/* 오른쪽 슬라이드 패널 */
+.journal-category-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  width: min(350px, 90vw);
+  padding: 1.5rem;
+  background: var(--j-card);
+  color: var(--j-text);
+  box-shadow: -12px 0 40px rgba(0,0,0,.12);
+  transform: translateX(105%);
+  visibility: hidden;
+  transition:
+    transform .35s cubic-bezier(.22,1,.36,1),
+    visibility .35s;
+}
+
+body.journal-drawer-open {
+  overflow: hidden;
+}
+
+body.journal-drawer-open .journal-drawer-backdrop {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+body.journal-drawer-open .journal-category-drawer {
+  transform: translateX(0);
+  visibility: visible;
+}
+
+body.journal-drawer-open .journal-drawer-trigger {
+  pointer-events: none;
+}
+
+/* 헤더 */
+.journal-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.2rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--j-line);
+}
+
+.journal-drawer-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 750;
+}
+
+.journal-drawer-close {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--j-soft);
+  color: var(--j-text);
+  cursor: pointer;
+}
+
+/* 스크롤 가능한 메뉴 영역 */
+.journal-drawer-list {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* All posts */
+.journal-drawer-all,
+.journal-drawer-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .6rem;
+  padding: .6rem .7rem;
+  border-radius: 8px;
+  color: var(--j-text) !important;
+  text-decoration: none !important;
+  font-size: .85rem;
+}
+
+.journal-drawer-all {
+  font-weight: 650;
+  margin-bottom: .5rem;
+}
+
+/* 상위 카테고리 */
+.journal-drawer-parent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: .5rem;
+  width: 100%;
+  padding: .2rem 0;
+}
+
+/* 상위 카테고리 링크 */
+.journal-drawer-parent-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  gap: .6rem;
+  min-width: 0;
+  padding: .7rem .85rem;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--j-text) !important;
+  text-decoration: none !important;
+  font-size: .9rem;
+  font-weight: 700;
+}
+
+/* 펼치기 버튼 */
+.journal-drawer-group-toggle {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  min-height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: #8b9098;
+  cursor: pointer;
+  transition: color .2s ease;
+}
+
+/* 호버 */
+.journal-drawer-parent-link:hover {
+  background: transparent;
+}
+
+.journal-drawer-group-toggle:hover {
+  background: transparent;
+  color: #606770;
+}
+
+/* 현재 선택된 카테고리 */
+.journal-drawer-parent-link.is-current {
+  background: transparent;
+  color: var(--j-text) !important;
+}
+
+/* 펼쳐진 버튼 */
+.journal-drawer-group-toggle[aria-expanded="true"] {
+  background: transparent;
+  color: #8b9098;
+}
+
+/* 화살표 크기 및 회전 */
+.journal-drawer-group-toggle svg {
+  display: block;
+  width: 13px;
+  height: 13px;
+  stroke-width: 2;
+  transition: transform .25s ease;
+}
+
+.journal-drawer-group-toggle[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+/* 다크 모드 */
+html.dark .journal-drawer-group-toggle {
+  color: #a1a6ae;
+}
+
+html.dark .journal-drawer-group-toggle:hover {
+  color: #d0d3d8;
+}
+
+
+/* 하위 카테고리 */
+.journal-drawer-children {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: .1rem 0 .5rem 1rem;
+  padding-left: .55rem;
+  border-left: 1px solid var(--j-line);
+}
+
+.journal-drawer-children[hidden] {
+  display: none;
+}
+
+.journal-drawer-children:not([hidden]) {
+  animation: journal-drawer-expand .25s ease-out both;
+}
+
+.journal-drawer-child {
+  padding: .42rem .6rem;
+  font-size: .8rem;
+  color: var(--j-muted) !important;
+}
+
+.journal-drawer-child:not(.is-empty):hover,
+.journal-drawer-all:hover {
+  background: var(--j-soft);
+}
+
+.journal-drawer-all.is-current,
+.journal-drawer-child.is-current,
+.journal-drawer-parent-link.is-current {
+  color: var(--j-text) !important;
+  font-weight: 750;
+}
+
+.journal-drawer-child.is-current {
+  background: var(--j-soft);
+}
+
+.journal-drawer-child.is-empty {
+  opacity: .45;
+  cursor: default;
+}
+
+.journal-drawer-list .journal-count {
+  flex-shrink: 0;
+  font-size: .72rem;
+  font-weight: 500;
+  color: var(--j-muted);
+}
+
+@keyframes journal-drawer-expand {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 접근성 */
+.journal-category-drawer a:focus-visible,
+.journal-category-drawer button:focus-visible,
+.journal-drawer-trigger:focus-visible {
+  outline: 2px solid var(--j-text);
+  outline-offset: 3px;
+}
+
+/* 모바일 */
+@media (max-width: 640px) {
+  .journal-category-drawer {
+    width: min(340px, 92vw);
+    padding: 1.2rem;
+  }
+
+  .journal-drawer-trigger {
+    top: 35%;
+    padding: .7rem .55rem;
+  }
+}
+
+/* 모션 최소화 */
+@media (prefers-reduced-motion: reduce) {
+  .journal-category-drawer,
+  .journal-drawer-backdrop,
+  .journal-drawer-trigger,
+  .journal-drawer-children {
+    animation: none;
+    transition: none;
+  }
+}

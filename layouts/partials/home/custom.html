@@ -1,0 +1,51 @@
+
+{{ $posts := (where site.RegularPages "Section" "posts").ByDate.Reverse }}
+{{ $recent := first 4 $posts.ByDate.Reverse }}
+
+<div class="journal-home">
+
+  <div class="journal-intro">
+    <div class="journal-intro-copy">
+      <!--<span class="journal-intro-eyebrow">Yujin's TECH LOG</span>-->
+      <h2>Yujin's Tech Blog</h2>
+      <p>학습, 경험, 분석한 것을 기록합니다.</p>
+      <a class="journal-view-all" href="{{ "about/" | relURL }}">About ↗</a>
+    </div>
+
+    <div class="journal-intro-visual">
+      <div class="terminal-window">
+        <div class="terminal-top">
+          <span></span><span></span><span></span>
+        </div>
+
+        <div class="terminal-body">
+          <p><span class="prompt">$</span> kubectl get pods</p>
+          <p>api-server-7f5d9 &nbsp; Running</p>
+          <p>worker-2 &nbsp; Running</p>
+          <p><span class="prompt">$</span> docker compose up -d</p>
+          <p>[+] Running 4/4</p>
+          <p><span class="prompt">$</span> terraform apply</p>
+          <p>Apply complete! <span class="cursor">|</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="journal-layout">
+    <section class="journal-feed">
+
+      <div class="journal-heading">
+        <div>
+          <h1>Recent Posts</h1>
+          <p>최근 게시글</p>
+        </div>
+        <a class="journal-view-all" href="{{ "posts/" | relURL }}">전체 글 보기 ↗</a>
+      </div>
+
+      {{ partial "journal/cards.html" (dict "pages" $recent) }}
+
+    </section>
+
+  </div>
+
+</div>
